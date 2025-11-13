@@ -4,10 +4,36 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import { FaChevronDown } from "react-icons/fa";
 
 const navItems = [
   { name: "About us", href: "/about" },
-  { name: "Products", href: "/products" },
+  {
+    name: "Products",
+    href: "/products",
+    hasDropdown: true,
+    submenu: [
+      {
+        id: 1,
+        name: "Surgical Operating Microscope",
+        image: "/products/SOM.png",
+        href: "/products/surgical-microscope",
+      },
+      {
+        id: 2,
+        name: "3D 4K Robotic Exoscope",
+        image: "/products/Robotic Exoscope.png",
+        href: "/products/robotic-exoscope",
+      },
+      {
+        id: 3,
+        name: "IGS - Navigation",
+        image: "/products/Navigation.png",
+        href: "/products/igs-navigation",
+      },
+    ],
+  },
   { name: "Specialities", href: "/specialities" },
   { name: "Contact", href: "/contact" },
 ];
@@ -37,6 +63,8 @@ function Logo() {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [productsDropdown, setProductsDropdown] = useState(false);
   const pathname = usePathname();
 
   // Prevent body scroll when mobile menu is open
@@ -59,30 +87,101 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
+  // Desktop Dropdown Component
+  const DesktopProductsDropdown = () => {
+    const productsItem = navItems.find((item) => item.hasDropdown);
+
+    return (
+      <div
+        onMouseEnter={() => setProductsDropdown(true)}
+        onMouseLeave={() => setProductsDropdown(false)}
+        className="relative group  py-4"
+      >
+        <button
+          className={`flex items-center gap-1 text-sm font-light transition-all duration-300 cursor-pointer ${
+            isActive("/products")
+              ? "text-white underline underline-offset-4 font-normal decoration-2"
+              : "text-white group-hover:underline underline-offset-4 decoration-2"
+          }`}
+        >
+          {productsItem.name}
+          {/* <FaChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" /> */}
+        </button>
+
+        {/* Dropdown Menu */}
+        <AnimatePresence>
+          {productsDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 1, y: 10 }}
+              //   transition={{ duration: 0.2 }}
+              className="absolute left-1/2 translate-x-[-50%] mt-4 w-lg xl:w-2xl bg-[#f4eeeb] rounded-lg overflow-hidden shadow-2xl  transition-all duration-300  z-50"
+            >
+              <div className=" grid grid-cols-3 ">
+                {productsItem.submenu.map((product) => (
+                  <Link
+                    key={product.id}
+                    href={product.href}
+                    className="flex flex-col items-center gap-6 p-8 pb-2  border-b-4 border-transparent hover:border-[#5493d7] hover:bg-[#f7f7f7] transition-all duration-300 group/item"
+                  >
+                    {/* Product Image */}
+                    <div className="relative w-28 xl:w-40 h-20 xl:h-32 rounded-lg shrink-0 overflow-hidden">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                        //   sizes="80px"
+                      />
+                    </div>
+
+                    {/* Product Info */}
+                    <div className="flex flex-col justify-center">
+                      <h4 className="text-xs xl:text-sm text-center font-semibold text-[#384F5D] ">
+                        {product.name}
+                      </h4>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
   return (
     <header className="w-full bg-transparent absolute top-0 left-0 px-4 z-50">
       <div className="flex items-center justify-between py-4 max-w-7xl mx-auto">
         <Logo />
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex gap-10 xl:gap-12">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`text-sm font-light transition-all duration-300 ${
-                isActive(item.href)
-                  ? "text-white underline underline-offset-4 font-normal decoration-2"
-                  : "text-white hover:underline underline-offset-4  decoration-2"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
+        <nav className="hidden lg:flex gap-10 xl:gap-12">
+          {navItems.map((item) => {
+            if (item.hasDropdown) {
+              return <DesktopProductsDropdown key={item.name} />;
+            }
+
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`text-sm py-4 font-light transition-all duration-300 ${
+                  isActive(item.href)
+                    ? "text-white underline underline-offset-4 font-normal decoration-2"
+                    : "text-white hover:underline underline-offset-4 decoration-2"
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Desktop Search */}
-        <div className="hidden border border-white/50 md:flex items-center bg-white/20 rounded-full px-4 py-2 backdrop-blur-md">
+        <div className="hidden border border-white/50 lg:flex items-center bg-white/20 rounded-full px-4 py-2 backdrop-blur-md">
           <input
             type="text"
             placeholder="Search"
@@ -103,7 +202,7 @@ export default function Header() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 z-50 relative"
+          className="lg:hidden p-2 z-50 relative"
           aria-label="Toggle navigation"
         >
           <motion.div
@@ -148,7 +247,7 @@ export default function Header() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
               />
 
               {/* Slide-in Menu */}
@@ -157,9 +256,9 @@ export default function Header() {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                className="fixed top-0 right-0 h-full w-[90vw] bg-linear-to-b from-[#1a2332] to-[#0f1419] shadow-2xl z-40 md:hidden"
+                className="fixed top-0 right-0 h-full w-[90vw] bg-gradient-to-b from-[#1a2332] to-[#0f1419] shadow-2xl z-40 lg:hidden overflow-y-auto"
               >
-                <nav className="flex flex-col gap-1 px-6 pt-24 pb-6 h-full">
+                <nav className="flex flex-col gap-1 px-6 pt-24 pb-6">
                   {/* Navigation Links */}
                   <div className="flex flex-col gap-1">
                     {navItems.map((item, index) => (
@@ -169,17 +268,82 @@ export default function Header() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: index * 0.1, duration: 0.3 }}
                       >
-                        <Link
-                          href={item.href}
-                          onClick={() => setOpen(false)}
-                          className={`text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 block ${
-                            isActive(item.href)
-                              ? "bg-white/10 text-white font-semibold"
-                              : "text-white hover:bg-white/10"
-                          }`}
-                        >
-                          {item.name}
-                        </Link>
+                        {item.hasDropdown ? (
+                          // Mobile Products Dropdown
+                          <div>
+                            <button
+                              onClick={() =>
+                                setOpenDropdown(
+                                  openDropdown === "products"
+                                    ? null
+                                    : "products"
+                                )
+                              }
+                              className="w-full text-left text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 text-white hover:bg-white/10 flex items-center justify-between"
+                            >
+                              {item.name}
+                              <FaChevronDown
+                                className={`w-4 h-4 transition-transform ${
+                                  openDropdown === "products"
+                                    ? "rotate-180"
+                                    : ""
+                                }`}
+                              />
+                            </button>
+
+                            {/* Mobile Submenu */}
+                            <AnimatePresence>
+                              {openDropdown === "products" && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                  className="bg-white/5 border-b border-white/10"
+                                >
+                                  {item.submenu.map((product) => (
+                                    <Link
+                                      key={product.id}
+                                      href={product.href}
+                                      onClick={() => setOpen(false)}
+                                      className="flex gap-3 p-4 text-white hover:bg-white/10 transition-colors border-b border-white/5 last:border-b-0"
+                                    >
+                                      {/* Product Image */}
+                                      <div className="relative w-16 h-16  rounded-lg flex-shrink-0 overflow-hidden">
+                                        <Image
+                                          src={product.image}
+                                          alt={product.name}
+                                          fill
+                                          className="object-cover"
+                                          sizes="64px"
+                                        />
+                                      </div>
+
+                                      {/* Product Info */}
+                                      <div className="flex flex-col justify-center">
+                                        <h4 className="text-sm font-semibold text-white">
+                                          {product.name}
+                                        </h4>
+                                      </div>
+                                    </Link>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            onClick={() => setOpen(false)}
+                            className={`text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 block ${
+                              isActive(item.href)
+                                ? "bg-white/10 text-white font-semibold"
+                                : "text-white hover:bg-white/10"
+                            }`}
+                          >
+                            {item.name}
+                          </Link>
+                        )}
                       </motion.div>
                     ))}
                   </div>
