@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
-  { name: "About us", href: "#about" },
-  { name: "Products", href: "#products" },
-  { name: "Specialities", href: "#specialities" },
-  { name: "Contact", href: "#contact" },
+  { name: "About us", href: "/about" },
+  { name: "Products", href: "/products" },
+  { name: "Specialities", href: "/specialities" },
+  { name: "Contact", href: "/contact" },
 ];
 
 function Logo() {
@@ -36,6 +37,7 @@ function Logo() {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -49,6 +51,14 @@ export default function Header() {
     };
   }, [open]);
 
+  // Check if link is active
+  const isActive = (href) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <header className="w-full bg-transparent absolute top-0 left-0 px-4 z-50">
       <div className="flex items-center justify-between py-4 max-w-7xl mx-auto">
@@ -60,7 +70,11 @@ export default function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-white text-sm font-light hover:underline transition-all"
+              className={`text-sm font-light transition-all duration-300 ${
+                isActive(item.href)
+                  ? "text-white underline underline-offset-4 font-normal decoration-2"
+                  : "text-white hover:underline underline-offset-4  decoration-2"
+              }`}
             >
               {item.name}
             </Link>
@@ -143,7 +157,7 @@ export default function Header() {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                className="fixed top-0 right-0 h-full w-[90vw] bg-gradient-to-b from-[#1a2332] to-[#0f1419] shadow-2xl z-40 md:hidden"
+                className="fixed top-0 right-0 h-full w-[90vw] bg-linear-to-b from-[#1a2332] to-[#0f1419] shadow-2xl z-40 md:hidden"
               >
                 <nav className="flex flex-col gap-1 px-6 pt-24 pb-6 h-full">
                   {/* Navigation Links */}
@@ -158,7 +172,11 @@ export default function Header() {
                         <Link
                           href={item.href}
                           onClick={() => setOpen(false)}
-                          className="text-white text-lg py-3 px-4 rounded-lg hover:bg-white/10 transition-all border-b border-white/10 block"
+                          className={`text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 block ${
+                            isActive(item.href)
+                              ? "bg-white/10 text-white font-semibold"
+                              : "text-white hover:bg-white/10"
+                          }`}
                         >
                           {item.name}
                         </Link>
