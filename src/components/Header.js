@@ -33,58 +33,13 @@ const navItems = [
       },
     ],
   },
-  {
-    name: "Specialities",
-    href: "/specialities",
-    submenu: [
-      {
-        id: 1,
-        name: "Nuero",
-        href: "/specialities/neuro",
-        normal: "/special/Normal/Neuro.svg",
-        selected: "/special/Selected/Neuro.svg",
-      },
-      {
-        id: 2,
-        name: "Spine",
-        href: "/specialities/spine",
-        normal: "/special/Normal/Spine.svg",
-        selected: "/special/Selected/Spine.svg",
-      },
-      {
-        id: 3,
-        name: "Opthalmology",
-        href: "/specialities/opthalmology",
-        normal: "/special/Normal/Opthal.svg",
-        selected: "/special/Selected/Opthal.svg",
-      },
-      {
-        id: 4,
-        name: "ENT",
-        href: "/specialities/ent",
-        normal: "/special/Normal/ENT.svg",
-        selected: "/special/Selected/ENT.svg",
-      },
-      {
-        id: 5,
-        name: "Plastic & Reconstructive",
-        href: "/specialities/plastic-and-reconstructive",
-        normal: "/special/Normal/P&R.svg",
-        selected: "/special/Selected/P&R.svg",
-      },
-      {
-        id: 6,
-        name: "Dental",
-        href: "/specialities/dental",
-        normal: "/special/Normal/Dental.svg",
-        selected: "/special/Selected/Dental.svg",
-      },
-    ],
-  },
+
   { name: "Contact", href: "/contact" },
 ];
 
 function Logo() {
+  const pathname = usePathname();
+
   return (
     <Link href="/">
       <div className="flex flex-col items-center space-y-2 cursor-pointer">
@@ -99,7 +54,11 @@ function Logo() {
         </div>
 
         {/* Tagline */}
-        <p className="text-[0.5rem] lg:text-xs text-gray-300 font-light tracking-wide">
+        <p
+          className={`text-[0.5rem] lg:text-xs ${
+            pathname === "/products" ? "text-[#18348C]" : "text-gray-300"
+          }  font-light tracking-wide`}
+        >
           Empowering Surgeons
         </p>
       </div>
@@ -144,16 +103,17 @@ export default function Header() {
         onMouseLeave={() => setProductsDropdown(false)}
         className="relative group  py-4"
       >
-        <button
+        <Link
+          href="/products"
           className={`flex items-center gap-1 text-sm font-light transition-all duration-300 cursor-pointer ${
             isActive("/products")
-              ? "text-white underline underline-offset-4 font-normal decoration-2"
+              ? "text-[#18348C] underline underline-offset-4 font-normal decoration-2"
               : "text-white group-hover:underline underline-offset-4 decoration-2"
           }`}
         >
           {productsItem.name}
           {/* <FaChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" /> */}
-        </button>
+        </Link>
 
         {/* Dropdown Menu */}
         <AnimatePresence>
@@ -198,74 +158,6 @@ export default function Header() {
       </div>
     );
   };
-  const DesktopSpecialDropdown = () => {
-    const specialsItem = navItems.find((item) => item.name == "Specialities");
-
-    return (
-      <div
-        onMouseEnter={() => setSpecialDropdown(true)}
-        onMouseLeave={() => setSpecialDropdown(false)}
-        className="relative group  py-4"
-      >
-        <button
-          className={`flex items-center gap-1 text-sm font-light transition-all duration-300 cursor-pointer ${
-            isActive("/specialities")
-              ? "text-white underline underline-offset-4 font-normal decoration-2"
-              : "text-white group-hover:underline underline-offset-4 decoration-2"
-          }`}
-        >
-          {specialsItem.name}
-          {/* <FaChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" /> */}
-        </button>
-
-        {/* Dropdown Menu */}
-        <AnimatePresence>
-          {specialDropdown && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 1, y: 10 }}
-              //   transition={{ duration: 0.2 }}
-              className="absolute left-1/2 translate-x-[-50%] mt-4 w-3xl xl:w-5xl bg-white/60 backdrop-blur-lg rounded-lg overflow-hidden shadow-2xl  transition-all duration-300  z-50"
-            >
-              <div className=" grid grid-cols-6 ">
-                {specialsItem.submenu.map((s) => (
-                  <Link
-                    key={s.id}
-                    href={s.href}
-                    className="flex flex-col items-center gap-6 p-8 pb-4 border-b-4 border-transparent hover:border-[#5493d7] hover:bg-[#f7f7f7] transition-all duration-300 group/item"
-                  >
-                    {/* Product Image */}
-                    <div className="relative w-16 h-16 rounded-lg shrink-0 overflow-hidden group/item">
-                      <Image
-                        src={s.normal}
-                        alt={s.name}
-                        fill
-                        className="object-cover transition-opacity duration-500 group-hover/item:opacity-0"
-                      />
-                      <Image
-                        src={s.selected}
-                        alt={s.name}
-                        fill
-                        className="object-cover opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"
-                      />
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="flex flex-col justify-center">
-                      <h4 className="text-xs xl:text-sm text-center font-semibold text-[#384F5D] ">
-                        {s.name}
-                      </h4>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  };
 
   return (
     <header className="w-full bg-transparent absolute top-0 left-0 px-4 z-50">
@@ -273,48 +165,55 @@ export default function Header() {
         <Logo />
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex gap-10 xl:gap-12">
-          {navItems.map((item) => {
-            if (item.name == "Products") {
-              return <DesktopProductsDropdown key={item.name} />;
-            }
-            if (item.name == "Specialities") {
-              return <DesktopSpecialDropdown key={item.name} />;
-            }
+        <div className="flex gap-10 xl:gap-16 items-center">
+          <nav className="hidden lg:flex gap-10 xl:gap-16">
+            {navItems.map((item) => {
+              if (item.name == "Products") {
+                return <DesktopProductsDropdown key={item.name} />;
+              }
 
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-sm py-4 font-light transition-all duration-300 ${
-                  isActive(item.href)
-                    ? "text-white underline underline-offset-4 font-normal decoration-2"
-                    : "text-white hover:underline underline-offset-4 decoration-2"
-                }`}
-              >
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-sm py-4 font-light transition-all duration-300 ${
+                    isActive(item.href)
+                      ? "text-white underline underline-offset-4 font-normal decoration-2"
+                      : isActive("/products")
+                      ? "text-[#18348C]"
+                      : "text-white hover:underline underline-offset-4 decoration-2"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* Desktop Search */}
-        <div className="hidden border border-white/50 lg:flex items-center bg-white/20 rounded-full px-4 py-2 backdrop-blur-md">
-          <input
-            type="text"
-            placeholder="Search"
-            className="bg-transparent outline-none text-white placeholder:text-white placeholder:opacity-60 w-32 xl:w-56"
-          />
-          <svg
-            className="w-5 h-5 ml-2 text-white opacity-80"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
+          {/* Desktop Search */}
+          <div
+            className={`hidden border ${
+              isActive("/products")
+                ? "border-[#18348C] bg-[#18348C4D]"
+                : "border-white/50 bg-white/20"
+            }  lg:flex items-center  rounded-full px-4 py-2 backdrop-blur-md`}
           >
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+            <input
+              type="text"
+              placeholder="Search"
+              className="bg-transparent outline-none text-white placeholder:text-white placeholder:opacity-60 w-32 xl:w-56"
+            />
+            <svg
+              className="w-5 h-5 ml-2 text-white opacity-80"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </div>
         </div>
 
         {/* Mobile hamburger */}
@@ -333,7 +232,9 @@ export default function Header() {
                 open: { rotate: 45, y: 8 },
               }}
               transition={{ duration: 0.3 }}
-              className="w-7 h-0.5 bg-white block"
+              className={`w-7 h-0.5 ${
+                isActive("/products") ? "bg-[#18348C]" : "bg-white"
+              }  block`}
             />
             <motion.span
               variants={{
@@ -341,7 +242,9 @@ export default function Header() {
                 open: { opacity: 0 },
               }}
               transition={{ duration: 0.3 }}
-              className="w-7 h-0.5 bg-white block"
+              className={`w-7 h-0.5 ${
+                isActive("/products") ? "bg-[#18348C]" : "bg-white"
+              }  block`}
             />
             <motion.span
               variants={{
@@ -349,7 +252,9 @@ export default function Header() {
                 open: { rotate: -45, y: -8 },
               }}
               transition={{ duration: 0.3 }}
-              className="w-7 h-0.5 bg-white block"
+              className={`w-7 h-0.5 ${
+                isActive("/products") ? "bg-[#18348C]" : "bg-white"
+              }  block`}
             />
           </motion.div>
         </button>
