@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutHeroSection() {
   return (
@@ -29,10 +30,13 @@ export default function AboutHeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 md:px-12 py-3 bg-sky-400 hover:bg-sky-500 text-white font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <Link
+                href={"/contact"}
+                className="px-8 md:px-12 py-3 bg-sky-400 hover:bg-sky-500 text-white font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
                 Contact
-              </button>
-              <button className="px-8 md:px-12 py-3 bg-transparent border-2 border-white/80 hover:bg-white/10 text-white font-medium rounded-full transition-all duration-300">
+              </Link>
+              <button className="px-8 md:px-12 py-3 bg-transparent border-2 border-white/80 hover:bg-white/10 text-white font-medium rounded-full transition-all duration-300 hover:scale-105 cursor-pointer">
                 Learn More
               </button>
             </div>

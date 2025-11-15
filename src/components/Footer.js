@@ -49,7 +49,7 @@ export default function Footer() {
             <ul className="grid grid-cols-2 md:grid-cols-1">
               <li>
                 <Link
-                  href="#about"
+                  href="/about"
                   className="text-[#000000A1] hover:text-gray-900 transition-colors text-sm"
                 >
                   About Us
@@ -57,20 +57,20 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#products"
+                  href="/products"
                   className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
                 >
                   Products
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="#specialities"
                   className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
                 >
                   Specialities
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="#news"
@@ -89,7 +89,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#contact"
+                  href="/contact"
                   className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
                 >
                   Contact
@@ -256,7 +256,7 @@ export default function Footer() {
               Privacy Policy
             </Link>
             <Link
-              href="#contact"
+              href="/contact"
               className="text-sm text-[#DBE5F2] hover:text-white transition-colors"
             >
               Contact

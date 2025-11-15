@@ -12,26 +12,6 @@ const navItems = [
   {
     name: "Products",
     href: "/products",
-    submenu: [
-      {
-        id: 1,
-        name: "Surgical Operating Microscope",
-        image: "/products/SOM.png",
-        href: "/products/surgical-microscope",
-      },
-      {
-        id: 2,
-        name: "3D 4K Robotic Exoscope",
-        image: "/products/Robotic Exoscope.png",
-        href: "/products/robotic-exoscope",
-      },
-      {
-        id: 3,
-        name: "IGS - Navigation",
-        image: "/products/Navigation.png",
-        href: "/products/igs-navigation",
-      },
-    ],
   },
 
   { name: "Contact", href: "/contact" },
@@ -55,9 +35,13 @@ function Logo() {
 
         {/* Tagline */}
         <p
-          className={`text-[0.5rem] lg:text-xs ${
-            pathname === "/products" ? "text-[#18348C]" : "text-gray-300"
-          }  font-light tracking-wide`}
+          className={`text-[0.5rem] lg:text-xs 
+  ${
+    pathname === "/" || pathname === "/about"
+      ? "text-gray-300"
+      : "text-[#18348C]"
+  } 
+  font-light tracking-wide`}
         >
           Empowering Surgeons
         </p>
@@ -94,71 +78,6 @@ export default function Header() {
   };
 
   // Desktop Dropdown Component
-  const DesktopProductsDropdown = () => {
-    const productsItem = navItems.find((item) => item.name == "Products");
-
-    return (
-      <div
-        onMouseEnter={() => setProductsDropdown(true)}
-        onMouseLeave={() => setProductsDropdown(false)}
-        className="relative group  py-4"
-      >
-        <Link
-          href="/products"
-          className={`flex items-center gap-1 text-sm font-light transition-all duration-300 cursor-pointer ${
-            isActive("/products")
-              ? "text-[#18348C] underline underline-offset-4 font-normal decoration-2"
-              : "text-white group-hover:underline underline-offset-4 decoration-2"
-          }`}
-        >
-          {productsItem.name}
-          {/* <FaChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" /> */}
-        </Link>
-
-        {/* Dropdown Menu */}
-        <AnimatePresence>
-          {productsDropdown && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 1, y: 10 }}
-              //   transition={{ duration: 0.2 }}
-              className="absolute left-1/2 translate-x-[-50%] mt-4 w-lg xl:w-2xl bg-white/60 backdrop-blur-lg rounded-lg overflow-hidden shadow-2xl  transition-all duration-300  z-50"
-            >
-              <div className=" grid grid-cols-3 ">
-                {productsItem.submenu.map((product) => (
-                  <Link
-                    key={product.id}
-                    href={product.href}
-                    className="flex flex-col items-center gap-6 p-8 pb-4 border-b-4 border-transparent hover:border-[#5493d7] hover:bg-[#f7f7f7] transition-all duration-300 group/item"
-                  >
-                    {/* Product Image */}
-                    <div className="relative w-28 xl:w-40 h-20 xl:h-32 rounded-lg shrink-0 overflow-hidden">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover"
-                        //   sizes="80px"
-                      />
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="flex flex-col justify-center">
-                      <h4 className="text-xs xl:text-sm text-center font-semibold text-[#384F5D] ">
-                        {product.name}
-                      </h4>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  };
-
   return (
     <header className="w-full bg-transparent absolute top-0 left-0 px-4 z-50">
       <div className="flex items-center justify-between py-4 max-w-7xl mx-auto">
@@ -168,21 +87,23 @@ export default function Header() {
         <div className="flex gap-10 xl:gap-16 items-center">
           <nav className="hidden lg:flex gap-10 xl:gap-16">
             {navItems.map((item) => {
-              if (item.name == "Products") {
-                return <DesktopProductsDropdown key={item.name} />;
-              }
-
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`text-sm py-4 font-light transition-all duration-300 ${
-                    isActive(item.href)
-                      ? "text-white underline underline-offset-4 font-normal decoration-2"
-                      : isActive("/products")
-                      ? "text-[#18348C]"
-                      : "text-white hover:underline underline-offset-4 decoration-2"
-                  }`}
+                  className={`text-sm py-4 font-light transition-all duration-300 
+  ${
+    isActive("/") || isActive("/about")
+      ? "text-white"
+      : item.href !== "/products" &&
+        item.href !== "/contact" &&
+        isActive(item.href)
+      ? "text-white underline underline-offset-4 font-normal decoration-2"
+      : isActive("/products") || isActive("/contact")
+      ? "text-[#18348C]"
+      : "text-white hover:underline underline-offset-4 decoration-2"
+  }
+`}
                 >
                   {item.name}
                 </Link>
@@ -193,9 +114,9 @@ export default function Header() {
           {/* Desktop Search */}
           <div
             className={`hidden border ${
-              isActive("/products")
-                ? "border-[#18348C] bg-[#18348C4D]"
-                : "border-white/50 bg-white/20"
+              pathname === "/" || pathname === "/about"
+                ? " border-white/50 bg-white/20"
+                : "border-[#18348C] bg-[#18348C4D]"
             }  lg:flex items-center  rounded-full px-4 py-2 backdrop-blur-md`}
           >
             <input
@@ -232,9 +153,9 @@ export default function Header() {
                 open: { rotate: 45, y: 8 },
               }}
               transition={{ duration: 0.3 }}
-              className={`w-7 h-0.5 ${
-                isActive("/products") ? "bg-[#18348C]" : "bg-white"
-              }  block`}
+              className={`w-7 h-0.5 
+  ${pathname === "/" || pathname === "/about" ? "bg-white" : "bg-[#18348C]"} 
+  block`}
             />
             <motion.span
               variants={{
@@ -242,9 +163,9 @@ export default function Header() {
                 open: { opacity: 0 },
               }}
               transition={{ duration: 0.3 }}
-              className={`w-7 h-0.5 ${
-                isActive("/products") ? "bg-[#18348C]" : "bg-white"
-              }  block`}
+              className={`w-7 h-0.5 
+  ${pathname === "/" || pathname === "/about" ? "bg-white" : "bg-[#18348C]"} 
+  block`}
             />
             <motion.span
               variants={{
@@ -252,9 +173,9 @@ export default function Header() {
                 open: { rotate: -45, y: -8 },
               }}
               transition={{ duration: 0.3 }}
-              className={`w-7 h-0.5 ${
-                isActive("/products") ? "bg-[#18348C]" : "bg-white"
-              }  block`}
+              className={`w-7 h-0.5 
+  ${pathname === "/" || pathname === "/about" ? "bg-white" : "bg-[#18348C]"} 
+  block`}
             />
           </motion.div>
         </button>
@@ -291,145 +212,17 @@ export default function Header() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: index * 0.1, duration: 0.3 }}
                       >
-                        {item.name == "Products" ? (
-                          // Mobile Products Dropdown
-                          <div>
-                            <button
-                              onClick={() =>
-                                setOpenDropdown(
-                                  openDropdown === "products"
-                                    ? null
-                                    : "products"
-                                )
-                              }
-                              className="w-full text-left text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 text-white hover:bg-white/10 flex items-center justify-between"
-                            >
-                              {item.name}
-                              <FaChevronDown
-                                className={`w-4 h-4 transition-transform ${
-                                  openDropdown === "products"
-                                    ? "rotate-180"
-                                    : ""
-                                }`}
-                              />
-                            </button>
-
-                            {/* Mobile Submenu */}
-                            <AnimatePresence>
-                              {openDropdown === "products" && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="bg-white/5 border-b border-white/10"
-                                >
-                                  {item.submenu.map((product) => (
-                                    <Link
-                                      key={product.id}
-                                      href={product.href}
-                                      onClick={() => setOpen(false)}
-                                      className="flex gap-4 p-4 text-white hover:bg-white/10 transition-colors border-b border-white/5 last:border-b-0"
-                                    >
-                                      {/* Product Image */}
-                                      <div className="relative w-16 h-16  rounded-lg flex-shrink-0 overflow-hidden">
-                                        <Image
-                                          src={product.image}
-                                          alt={product.name}
-                                          fill
-                                          className="object-cover"
-                                          sizes="64px"
-                                        />
-                                      </div>
-
-                                      {/* Product Info */}
-                                      <div className="flex flex-col justify-center">
-                                        <h4 className="text-sm font-semibold text-white">
-                                          {product.name}
-                                        </h4>
-                                      </div>
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ) : item.name == "Specialities" ? (
-                          // Mobile Products Dropdown
-                          <div>
-                            <button
-                              onClick={() =>
-                                setOpenDropdown(
-                                  openDropdown === "specialities"
-                                    ? null
-                                    : "specialities"
-                                )
-                              }
-                              className="w-full text-left text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 text-white hover:bg-white/10 flex items-center justify-between"
-                            >
-                              {item.name}
-                              <FaChevronDown
-                                className={`w-4 h-4 transition-transform ${
-                                  openDropdown === "specialities"
-                                    ? "rotate-180"
-                                    : ""
-                                }`}
-                              />
-                            </button>
-
-                            {/* Mobile Submenu */}
-                            <AnimatePresence>
-                              {openDropdown === "specialities" && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="bg-white/5 border-b border-white/10"
-                                >
-                                  {item.submenu.map((s) => (
-                                    <Link
-                                      key={s.id}
-                                      href={s.href}
-                                      onClick={() => setOpen(false)}
-                                      className="flex gap-4 p-4 text-white hover:bg-white/10 transition-colors border-b border-white/5 last:border-b-0"
-                                    >
-                                      {/* Product Image */}
-                                      <div className="relative w-10 h-10  rounded-lg flex-shrink-0 overflow-hidden">
-                                        <Image
-                                          src={s.selected}
-                                          alt={s.name}
-                                          fill
-                                          className="object-cover"
-                                          sizes="64px"
-                                        />
-                                      </div>
-
-                                      {/* Product Info */}
-                                      <div className="flex flex-col justify-center">
-                                        <h4 className="text-sm font-semibold text-white">
-                                          {s.name}
-                                        </h4>
-                                      </div>
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ) : (
-                          <Link
-                            href={item.href}
-                            onClick={() => setOpen(false)}
-                            className={`text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 block ${
-                              isActive(item.href)
-                                ? "bg-white/10 text-white font-semibold"
-                                : "text-white hover:bg-white/10"
-                            }`}
-                          >
-                            {item.name}
-                          </Link>
-                        )}
+                        <Link
+                          href={item.href}
+                          onClick={() => setOpen(false)}
+                          className={`text-lg py-3 px-4 rounded-lg transition-all border-b border-white/10 block ${
+                            isActive(item.href)
+                              ? "bg-white/10 text-white font-semibold"
+                              : "text-white hover:bg-white/10"
+                          }`}
+                        >
+                          {item.name}
+                        </Link>
                       </motion.div>
                     ))}
                   </div>

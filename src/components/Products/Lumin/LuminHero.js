@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LuminHero() {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -133,9 +134,12 @@ export default function LuminHero() {
               <button className="px-6 md:px-8 py-3 md:py-3.5 bg-[#EE7500] hover:bg-orange-600 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
                 Download Brochure
               </button>
-              <button className="px-6 md:px-8 py-3 md:py-3.5 bg-[#2894D1] hover:bg-[#2B8FBF] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
+              <Link
+                href={"/contact"}
+                className="px-6 md:px-8 py-3 md:py-3.5 bg-[#2894D1] hover:bg-[#2B8FBF] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
+              >
                 Contact
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>
