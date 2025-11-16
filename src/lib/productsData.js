@@ -16,6 +16,7 @@ export const productsData = {
       { src: "/products/model3/4.png", alt: "CAPLA detail view 3" },
     ],
     heading: "Redefining Precision in Neurosurgery",
+    // brochure: "/products/Sanma Capla.pdf",
   },
   "glo-i": {
     id: "glo-i",
@@ -23,6 +24,7 @@ export const productsData = {
     subcategory: "Surgery Operating Microscope",
     specialties: "Ophthalmology",
     subtitle: "Cataract Surgery (Anterior Segment)",
+    brochure: "/products/Sanma Glo-i.pdf",
 
     modelName: "Glo-i",
     features:
@@ -43,6 +45,7 @@ export const productsData = {
     specialties: "Ophthalmology",
     subtitle: "Retinal (Posterior Segment / Vitreoretinal)",
     modelName: "VisPro",
+    brochure: "/products/Sanma VisPro.pdf",
     features:
       "       <p class='text-[#000000A1] text-base  md:text-lg '>               - Designed for Posterior Segment Precision    </p><p class='text-[#000000A1] text-base  md:text-lg '>                - High magnification (6×–40×) and superior depth of field for intricate retinal work. </p>              <p class='text-[#000000A1] text-base  md:text-lg'>                 - Compatible with wide-angle BIOM systems for panoramic fundus visualization.  </p>      <p class='text-[#000000A1] text-base  md:text-lg '>                - Adjustable LED illumination minimizes glare and retinal phototoxicity. </p>    <p class='text-[#000000A1] text-base  md:text-lg '> - Motorised XY control and focus enable precise micro-movements without repositioning.     </p>                              <p class='text-[#000000A1] text-base  md:text-lg '> - Integration-ready for 3D visualisation and intraoperative OCT systems.             </p>",
     description:
@@ -61,6 +64,7 @@ export const productsData = {
     specialties: "ENT",
     subtitle: "Surgical Microscopes",
     modelName: "Crisp-i",
+    brochure: "/products/Crisp - i.pdf",
     features:
       "  <p class='text-[#CF5C49] font-semibold text-sm  md:text-base mb-2'>               Designed for precision, stability, and ergonomic performance in ENT procedures.              </p>              <p class='text-[#000000A1] text-base  md:text-lg '>              - Essential clarity for everyday ENT precision.   </p><p class='text-[#000000A1] text-base  md:text-lg '>               - Reliable performance. Refined simplicity.    </p>              <p class='text-[#000000A1] text-base  md:text-lg'>                - Compact design. Clear vision. Confident outcomes. </p>      <p class='text-[#000000A1] text-base  md:text-lg '>                - Crisp visualization for routine ENT microsurgeries.   </p>    <p class='text-[#000000A1] text-base  md:text-lg '> - Focused functionality with dependable optical clarity.        </p>",
     description:

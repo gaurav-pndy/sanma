@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import "react-international-phone/style.css";
+import { PhoneInput } from "react-international-phone";
 
 export default function ContactForm() {
   const [selectedOption, setSelectedOption] = useState("dr");
@@ -109,21 +111,12 @@ export default function ContactForm() {
               <label className="block text-sm font-medium text-[#575578] mb-2">
                 Phone number
               </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value="+91"
-                  disabled
-                  className="px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 w-16"
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2894D1] focus:border-transparent"
-                />
-              </div>
+              <PhoneInput
+                defaultCountry="in"
+                value={formData.phone}
+                onChange={(phone) => setFormData({ ...formData, phone })}
+                className="w-full [&_input]:h-12! "
+              />
             </div>
 
             <div className="mb-6">
@@ -184,21 +177,12 @@ export default function ContactForm() {
               <label className="block text-sm font-medium text-[#575578] mb-2">
                 Phone number/Whatsapp
               </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value="+91"
-                  disabled
-                  className="px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 w-16"
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2894D1] focus:border-transparent"
-                />
-              </div>
+              <PhoneInput
+                defaultCountry="in"
+                value={formData.phone}
+                onChange={(phone) => setFormData({ ...formData, phone })}
+                className="w-full [&_input]:h-12! "
+              />
             </div>
 
             <div className="mb-6">
@@ -259,21 +243,12 @@ export default function ContactForm() {
               <label className="block text-sm font-medium text-[#575578] mb-2">
                 Phone number/Whatsapp
               </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value="+91"
-                  disabled
-                  className="px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 w-16"
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2894D1] focus:border-transparent"
-                />
-              </div>
+              <PhoneInput
+                defaultCountry="in"
+                value={formData.phone}
+                onChange={(phone) => setFormData({ ...formData, phone })}
+                className="w-full [&_input]:h-12! "
+              />
             </div>
 
             <div className="mb-6">

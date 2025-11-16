@@ -173,17 +173,6 @@ export default function Footer() {
                   sales@sanmas.com
                 </a>
               </div>
-
-              {/* Phone */}
-              <div className="flex items-center gap-3">
-                <HiPhone className="w-5 h-5 text-gray-600 shrink-0" />
-                <a
-                  href="tel:+919444444624"
-                  className="text-sm text-[#000000A1] hover:text-gray-900 transition-colors"
-                >
-                  +91 94444 44624
-                </a>
-              </div>
             </div>
           </div>
 
@@ -191,14 +180,18 @@ export default function Footer() {
           <div className="md:col-span-2 lg:col-span-1">
             <div className="flex items-center justify-center lg:justify-start gap-3 pt-2">
               <a
-                href="#facebook"
+                href="https://www.facebook.com/SanmaMedineeers/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-[#7F8F9C] hover:bg-gray-400 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <FaFacebookF className="w-5 h-5 text-white" />
               </a>
               <a
-                href="#instagram"
+                href="https://www.instagram.com/sanmamedineers?igsh=NWw0eGQxeDRuOXBt"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-[#7F8F9C] hover:bg-gray-400 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
@@ -212,14 +205,18 @@ export default function Footer() {
                 <FaTwitter className="w-5 h-5 text-white" />
               </a>
               <a
-                href="#whatsapp"
+                href="https://wa.me/919944922444"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-[#7F8F9C] hover:bg-gray-400 rounded-full flex items-center justify-center transition-colors"
                 aria-label="WhatsApp"
               >
                 <FaWhatsapp className="w-5 h-5 text-white" />
               </a>
               <a
-                href="#linkedin"
+                href="http://www.linkedin.com/in/sanmamedineers"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-[#7F8F9C] hover:bg-gray-400 rounded-full flex items-center justify-center transition-colors"
                 aria-label="LinkedIn"
               >

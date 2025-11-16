@@ -8,3 +8,32 @@
   font-optical-sizing: auto;
 
 }
+
+.react-international-phone-country-selector-button{
+    height: 100% !important;
+    padding-left: 2px !important;
+      border-color: #d1d5dc !important;
+  border-radius: 0.5rem !important;
+  border-top-right-radius: 0% !important;
+  border-bottom-right-radius: 0% !important;
+}
+
+.react-international-phone-input{
+  width: 100% !important;
+  border-color: #d1d5dc !important;
+  border-radius: 0.5rem !important;
+  border-top-left-radius: 0% !important;
+  border-bottom-left-radius: 0% !important;
+}
+
+.react-international-phone-input-container{
+  border-radius: 0.5rem !important;
+}
+
+/* When input OR flag is focused, style the whole container */
+.react-international-phone-input-container:focus-within {
+  outline: none !important;              /* focus:outline-none */
+  box-shadow: 0 0 0 2px #2894D1 !important; /* focus:ring-2 focus:ring-[#2894D1] */
+  border-color: transparent !important;  /* focus:border-transparent */
+}
+

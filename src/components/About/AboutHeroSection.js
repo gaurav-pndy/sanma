@@ -32,7 +32,7 @@ export default function AboutHeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href={"/contact"}
-                className="px-8 md:px-12 py-3 bg-sky-400 hover:bg-sky-500 text-white font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="px-8 md:px-12 py-3 bg-sky-400 hover:bg-sky-500 text-white font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105  flex justify-center items-center"
               >
                 Contact
               </Link>
